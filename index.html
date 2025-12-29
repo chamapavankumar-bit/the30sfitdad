@@ -2,141 +2,233 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>The 30s Fit Dad</title>
+  <title>The 30s Fit Dad – Free Habit Tracker</title>
 
+  <!-- SEO -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A daily accountability log of a man choosing health and discipline for his family before turning 30." />
+  <meta name="description" content="The 30s Fit Dad — a daily accountability log. Free habit tracker. 30s are the new 20s." />
+  <meta name="keywords" content="habit tracker, fitness 30s, BMI calculator, accountability, weight loss" />
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="The 30s Fit Dad" />
+  <meta property="og:description" content="95 kg → 75 kg · One day at a time. Free habit tracker." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://the30sfitdad.fitness" />
+
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: #FFFFE3;
-      color: #4A4A4A;
-      line-height: 1.65;
+      background: #ffffff;
+      color: #222;
+      line-height: 1.7;
     }
 
     .container {
-      max-width: 760px;
+      max-width: 720px;
       margin: auto;
-      padding: 72px 24px; /* reduced top spacing */
+      padding: 40px 20px 120px;
     }
 
+    /* Desktop enhancement */
+    @media (min-width: 1024px) {
+      .container {
+        max-width: 900px;
+      }
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu {
+      font-size: 26px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.3s ease;
+    }
+
+    .menu.open {
+      transform: rotate(90deg);
+    }
+
+    /* MENU PANEL */
+    .menu-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      border-top: 1px solid #eee;
+      margin-top: 20px;
+    }
+
+    .menu-panel.open {
+      max-height: 200px;
+    }
+
+    .menu-panel a {
+      display: block;
+      padding: 12px 0;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+    }
+
+    /* TEXT */
     h1 {
       font-size: 36px;
-      font-weight: 600;
-      margin: 0;
+      margin-top: 80px;
+      margin-bottom: 6px;
     }
 
     h2 {
       font-size: 20px;
-      font-weight: 500;
-      margin-top: 48px; /* reduced spacing */
+      margin-top: 0;
     }
 
     p {
-      font-size: 16px;
-      color: #6D8196;
-      margin-top: 14px;
+      font-size: 17px;
+      color: #555;
       max-width: 640px;
     }
 
     .muted {
       font-size: 14px;
-      color: #6D8196;
-      margin-top: 8px;
+      color: #777;
     }
 
-    .divider {
-      width: 48px;
-      height: 2px;
-      background: #CBCBCB;
-      margin: 28px 0;
-    }
-
-    .highlight-box {
-      background: rgba(255, 255, 227, 0.6);
-      border: 1px solid #CBCBCB;
+    /* SECTIONS */
+    .section {
+      margin-top: 50px;
+      padding: 28px 24px;
+      border: 1px solid #eee;
       border-radius: 8px;
-      padding: 16px 18px;
-      margin-top: 24px;
-      max-width: 640px;
+      background: #fff;
     }
 
+    .section.accent {
+      border-left: 4px solid #000;
+    }
+
+    /* CTA */
     .cta {
       display: inline-block;
       margin-top: 24px;
-      padding: 12px 28px;
-      background: #4A4A4A;
-      color: #FFFFE3;
+      padding: 14px 30px;
+      background: #000;
+      color: #fff;
       text-decoration: none;
-      font-size: 15px;
+      border-radius: 6px;
       font-weight: 500;
+    }
+
+    /* BMI */
+    .bmi {
+      display: none;
+    }
+
+    .bmi-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 15px;
+      border: 1px solid #ddd;
       border-radius: 6px;
     }
 
-    footer {
-      margin-top: 96px;
-      font-size: 13px;
-      color: #6D8196;
+    .input-small {
+      width: 120px;
     }
 
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 30px;
-      }
-      .container {
-        padding: 56px 20px;
-      }
+    .input-medium {
+      width: 160px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 14px;
+      font-weight: 500;
+    }
+
+    .bmi-status {
+      margin-top: 8px;
+      font-size: 15px;
+      color: #444;
+    }
+
+    .disclaimer {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #888;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <!-- HERO -->
-    <h1>The 30s Fit Dad</h1>
-<p class="muted">95 kg → 75 kg · One day at a time</p>
+  <!-- HEADER -->
+  <div class="header">
+    <strong>The 30s Fit Dad</strong>
+    <div class="menu" id="menuBtn" onclick="toggleMenu()">☰</div>
+  </div>
 
-<p>
-  This is my daily log — choosing health, discipline,
-  and consistency for my family.
-</p>
+  <!-- MENU -->
+  <div class="menu-panel" id="menuPanel">
+    <a href="#" onclick="showBMI()">Check BMI</a>
+    <a href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank">Get habit tracker</a>
+  </div>
 
-<div class="highlight-box">
-  <strong>Free habit tracker</strong>
-  <p class="muted">
-    The same simple tracker I use every day.
-    No apps. No hacks. Just consistency.
+  <!-- HERO -->
+  <h1>The 30s Fit Dad</h1>
+  <p class="muted">95 kg → 75 kg · One day at a time</p>
+
+  <p>
+    This is my daily log — choosing health, discipline,
+    and consistency for my family.
   </p>
-</div>
 
-<a
-  class="cta"
-  href="https://forms.gle/7FGceZjvgLCsz8rX7"
-  target="_blank"
-  rel="noopener"
->
-  Get the free habit tracker
-</a>
+  <!-- FREE TRACKER -->
+  <div class="section accent">
+    <h2>Free habit tracker</h2>
 
-<p class="muted">Free. No spam. I use this myself.</p>
+    <p>
+      The same simple tracker I use every day.
+      No apps. No hacks. Just consistency.
+    </p>
 
-<!-- MOVED HERE -->
-<h2>How it works</h2>
-<p>
-  Sign up → Get access → Track daily.
-</p>
+    <a class="cta" href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank">
+      Get the free habit tracker
+    </a>
 
-<div class="divider"></div>
+    <p class="muted">Free. No spam. I use this myself.</p>
+  </div>
 
+  <!-- HOW -->
+  <div class="section">
+    <h2>How it works</h2>
+    <p>Sign up → Get access → Track daily.</p>
+  </div>
 
-    <!-- WHY -->
+  <!-- WHY -->
+  <div class="section">
     <h2>Why this exists</h2>
+
     <p>
       This page exists to keep me accountable.
       I’m documenting my habits to stay honest with myself.
@@ -146,14 +238,70 @@
       If you’re in your 30s and trying to get back in shape,
       you’re welcome to walk this path with me.
     </p>
-
-   
-    <footer>
-      © 2025 The 30s Fit Dad<br />
-      30s are the new 20s.
-    </footer>
-
   </div>
+
+  <!-- BMI -->
+  <div class="section bmi" id="bmiSection">
+    <h2>Quick BMI Check</h2>
+
+    <div class="bmi-row">
+      <input type="number" id="feet" class="input-small" placeholder="Feet" />
+      <input type="number" id="inches" class="input-small" placeholder="Inches" />
+    </div>
+
+    <input type="number" id="weight" class="input-medium" placeholder="Weight (kg)" />
+
+    <button onclick="calculateBMI()">Check BMI</button>
+
+    <div class="result" id="bmiResult"></div>
+    <div class="bmi-status" id="bmiStatus"></div>
+
+    <div class="disclaimer">
+      BMI is a general guideline and does not account for muscle mass or medical conditions.
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById('menuPanel');
+    const btn = document.getElementById('menuBtn');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+
+  function showBMI() {
+    const bmi = document.getElementById('bmiSection');
+    bmi.style.display = 'block';
+    toggleMenu();
+    bmi.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function calculateBMI() {
+    const feet = parseFloat(document.getElementById('feet').value);
+    const inches = parseFloat(document.getElementById('inches').value) || 0;
+    const weight = parseFloat(document.getElementById('weight').value);
+
+    if (!feet || weight <= 0) return;
+
+    const totalInches = (feet * 12) + inches;
+    const heightMeters = totalInches * 0.0254;
+    const bmi = (weight / (heightMeters * heightMeters)).toFixed(1);
+
+    let status = '';
+    if (bmi < 18.5) status = 'Underweight';
+    else if (bmi < 25) status = 'Normal range';
+    else if (bmi < 30) status = 'Overweight';
+    else status = 'Obese';
+
+    document.getElementById('bmiResult').innerText = `Your BMI is ${bmi}`;
+    document.getElementById('bmiStatus').innerText = `This falls under: ${status}`;
+
+    document.getElementById('bmiStatus').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
 
 </body>
 </html>
+
